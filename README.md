@@ -1,6 +1,24 @@
 # GitHubRetrieve
 Using the latest Angular and Bootstrap and the GitHub API to retrieve the most starred public Angular projects.
 
+## Project Architecture 
+
+### Entry Point
+
+```
+app.module.ts
+app.component.ts
+app-routing.ts
+```
+
+### Components
+
+```
+GitHub Retrieve Service: retrieve-project.service.ts Fetch angular project with GitHub API v3
+Project List: project-list/project-list.component.ts Read data by the service and display in a primeNG list with filter and pagination. Click on each record to visit project details.
+Project Details: project-details/project-details.component.ts Read data by the service and display the details in a primeNG card.
+```
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -55,23 +73,6 @@ Add links to project-list.
 Debug the app and enhance the CSS.
 ```
 
-## Project Architecture 
-
-### Entry Point
-
-```
-app.module.ts
-app.component.ts
-app-routing.ts
-```
-
-### Components
-
-```
-GitHub Retrieve Service: retrieve-project.service.ts Fetch angular project with GitHub API v3
-Project List: project-list/project-list.component.ts Read data by the service and display in a primeNG list with filter and pagination. Click on each record to visit project details.
-Project Details: project-details/project-details.component.ts Read data by the service and display the details in a primeNG card.
-```
 
 ## Running the tests
 
