@@ -7,10 +7,10 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class RetrieveProjectService {
 
-  private searchReporsitoriesEndPoint = "https://api.github.com/search/repositories?q=angular+is:public+stars:>5";
-  private getReporsitoriesDetailsEndPoint = "https://api.github.com/repositories/";
+  private searchRepositoriesEndPoint = "https://api.github.com/search/repositories?q=angular+is:public";
+  private getRepositoriesDetailsEndPoint = "https://api.github.com/repositories/";
   constructor(private http: HttpClient) { }
-  getReporsitoriesForAngularProject(place: string, language: string) {
+  getReporsitoriesForAngularProject(first: number, rows: number, filter: string, language: string): Observable<{ total_count: number, items: Repository[] }> {
     let url;
     // if (place && !language) {
     //   url = `${this.searchReporsitoriesEndPoint}location:${place}`;
@@ -19,19 +19,16 @@ export class RetrieveProjectService {
     // } else {
     //   url = `${this.searchReporsitoriesEndPoint}location:${place}+language:${language}`;
     // }
-    url = this.searchReporsitoriesEndPoint;
+    url = `${this.searchRepositoriesEndPoint}+${filter ? filter : ""}&page=${Math.round(first / rows) + 1}&per_page=${rows}`
     return this.http.get(url, { headers: this.getHeaders() })
-      .map(this.extractData)
+      .map(r => r)
       .catch(this.handleError);
   }
 
   protected getHeaders() {
     return new HttpHeaders({ 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' });
   }
-  private extractData(res: {incomplete:boolean,items:any[],total_count:number}) {
-    console.log(res);
-    return res;
-  }
+
   private handleError(error: Response | any) {
     // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;
@@ -46,4 +43,20 @@ export class RetrieveProjectService {
     return Observable.throw(errMsg);
   }
 
+  getRepository(url: string): Observable<Repository> {
+    return this.http.get(url, { headers: this.getHeaders() })
+      .map(r => r)
+      .catch(this.handleError);
+  }
+}
+
+export interface Repository {
+  id,
+  name,
+  full_name,
+  svn_url,
+  created_at,
+  pushed_at,
+  description,
+  stargazers_count,
 }

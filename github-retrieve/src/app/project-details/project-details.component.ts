@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { RetrieveProjectService, Repository } from '../retrieve-project.service';
 
 @Component({
   selector: 'app-project-details',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectDetailsComponent implements OnInit {
 
-  constructor() { }
+  repo: Repository = {} as Repository;
+  constructor(private route: ActivatedRoute, private service: RetrieveProjectService) { }
 
   ngOnInit() {
+    let url = this.route.snapshot.paramMap.get("url");
+    this.service.getRepository(url).subscribe(
+      r => {
+        this.repo = r;
+      }, err => {
+
+      }, () => {
+
+      }
+    )
   }
 
 }

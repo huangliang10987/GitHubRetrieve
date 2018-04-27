@@ -1,3 +1,21 @@
-<p>
-  project-details works!
-</p>
+<div class="ui-g">
+  <p-card class="ui-sm-offset-1 ui-sm-10 ui-md-offset-3 ui-md-6 ui-lg-offset-4 ui-lg-4" title="{{repo.name}}" [style]="{'min-width':'200px'}"
+    subtitle="{{repo.full_name}}" styleClass="ui-card-shadow">
+    <div>
+      <h2>
+        <i class="fa fa-star" aria-hidden="true"></i> Starts:{{repo.stargazers_count}}</h2>
+    </div>
+    <p>
+      <strong>{{repo.description}}</strong>
+    </p>
+    <div>Repository ID: {{repo.id}}</div>
+    <div>URL:
+      <a [href]="repo.svn_url">{{repo.svn_url}}</a>
+    </div>
+    <div>Created Date: {{repo.created_at|date:"long"}}</div>
+    <div>Last Push Date: {{repo.pushed_at|date:"long"}}</div>
+    <p-footer>
+      <p-button label="Back" icon="fa fa-arrow-left" iconPos="left" [routerLink]="['/']"></p-button>
+    </p-footer>
+  </p-card>
+</div>
